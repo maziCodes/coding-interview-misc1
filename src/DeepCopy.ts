@@ -34,7 +34,22 @@ export namespace DeepCopy {
     export function deepCopy<T extends any>(source: T): T {
 
         // TODO: implement this function from the above function definition.
-        return {} as T;
+        let newSource:T , value, key
+
+        if (typeof source !== "object" || source === null) {
+            return source
+        }
+
+        newSource = Array.isArray(source) ? [] as T : {} as T
+
+        for (key in source) {
+            value = source[key];
+        
+            // Recursively (deep) copy for nested objects, including arrays
+            newSource[key] = deepCopy(value)
+        }
+        
+        return newSource as T
     }
 
 }
