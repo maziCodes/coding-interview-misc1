@@ -42,7 +42,7 @@ export const Settings = () => {
     let isLight = true;
     const [light, setLight] = React.useState(isLight);
     const setTheme = (light: boolean) => {
-        return !light;
+        return setLight(!light);
     }
     const toggleMode = React.useCallback(() => {
         return setTheme(light);
