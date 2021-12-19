@@ -41,12 +41,12 @@ export const Main = () => {
 export const Settings = () => {
     let isLight = true;
     const [light, setLight] = React.useState(isLight);
-    const setTheme = () => {
-        return !isLight;
+    const setTheme = (light: boolean) => {
+        return !light;
     }
     const toggleMode = React.useCallback(() => {
-        return setTheme();
-    }, [isLight]);
+        return setTheme(light);
+    }, [light]);
 
     return (
         <button onClick={toggleMode}>toggle light/dark mode</button>
