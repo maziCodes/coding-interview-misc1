@@ -34,11 +34,28 @@ type UseLocalStorageStateTuple<V> = readonly [V, SetLocalStorage<V>];
 export function useLocalStorageState<V extends string>(key: string, initialValue: V): UseLocalStorageStateTuple<V> {
 
     // TODO: implement this code
+    const [value, setValue] = React.useState(initialValue);
+
+    const setLocalStorage: SetLocalStorage<V> = (value: V) => {
+        localStorage.setItem(key, JSON.stringify(value));
+        setValue(() => value);
+    }
+
+    const getLocalStorage = (key: string) => {
+        setValue(() => JSON.parse(localStorage.getItem(key) as string));
+    }
 
     const setter = React.useCallback((newValue: V) => {
         // noop
-    }, [])
+        if (!localStorage.getItem(key)) {
+            setLocalStorage(newValue);
+        } else {
+            getLocalStorage(key)
+        }
+    }, [value])
 
-    return [initialValue, setter];
+    
+
+    return [value, setter];
 
 }
